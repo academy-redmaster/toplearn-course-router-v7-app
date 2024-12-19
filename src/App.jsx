@@ -1,12 +1,17 @@
 import { NextUIProvider } from "@nextui-org/react";
-import {ThemeProvider as NextThemesProvider} from "next-themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeSwitcher } from "./components/themeSwitcher";
+import { Outlet } from "react-router";
+import NavigationBar from "./components/navigationBar";
+import CopyRight from "./components/copyRight";
 
 export default function App() {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <h1>Hello world</h1>
+        <NavigationBar />
+        <Outlet />
+        <CopyRight/>
         <ThemeSwitcher />
       </NextThemesProvider>
     </NextUIProvider>
