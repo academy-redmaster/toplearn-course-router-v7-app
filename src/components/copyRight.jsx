@@ -26,9 +26,9 @@ export default function CopyRight() {
           <i className="ri-mail-line text-2xl"></i>
         </Button>
       </div>
-      <p>
-        <i className="ri-copyright-line"></i>
-        2025 Redmaster Academy. all right reserved
+      <p className="capitalize">
+        <i className="ri-copyright-line "></i>
+        2025 TopLearn.com . all right reserved
       </p>
     </div>
   );

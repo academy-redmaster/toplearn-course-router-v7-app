@@ -5,7 +5,7 @@ export const swaggerOptions = {
     info: {
       title: "RedMaster Academy",
       description:
-        "<h2>Ali Shahbaz</h2>Api for course react router dom v6.4 created with Bun and Express and MongoDB",
+        "<h2>Ali Shahbaz</h2>Api for course Library and Framework React Router V7 created with Bun and Express and MongoDB",
       contact: {
         name: "redmaster.academy",
         email: "mr.redmasterr@gmail.com",
