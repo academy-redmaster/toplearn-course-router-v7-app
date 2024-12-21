@@ -14,13 +14,14 @@ import ContactUsPage, {
   loader as contactusLoader,
 } from "./pages/contactUs.jsx";
 import TodoLayoutPage from "./pages/todoLayout.jsx";
+import TodoIndexPage,{loader as todoIndexLoader} from "./pages/todoIndex.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />}>
       <Route path="/:lang?/" Component={HomePage} />
       <Route path="todo" element={<TodoLayoutPage />}>
-        <Route index element={"index page"} />
+        <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
         <Route path="create" element={"create page"} />
         <Route path=":id" element={"details page"} />
         <Route path=":id/edit" element={"create page"} />
