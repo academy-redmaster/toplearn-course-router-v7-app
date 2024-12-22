@@ -15,6 +15,7 @@ import ContactUsPage, {
 } from "./pages/contactUs.jsx";
 import TodoLayoutPage from "./pages/todoLayout.jsx";
 import TodoIndexPage,{loader as todoIndexLoader} from "./pages/todoIndex.jsx";
+import TodoDetailsPage,{loader as todoDetailsLoader} from "./pages/todoDetails.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="todo" element={<TodoLayoutPage />}>
         <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
         <Route path="create" element={"create page"} />
-        <Route path=":id" element={"details page"} />
+        <Route path=":id" element={<TodoDetailsPage />} loader={todoDetailsLoader} />
         <Route path=":id/edit" element={"create page"} />
         <Route path=":id/complete" element={"complete page"} />
         <Route path=":id/archive" element={"archive page"} />
