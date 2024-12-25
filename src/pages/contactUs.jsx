@@ -10,13 +10,13 @@ export default function ContactUsPage() {
   const data = useLoaderData();
   const { theme } = useTheme();
   return (
-    <div className="min-h-[80vh] max-w-7xl mx-auto flex flex-col items-center justify-center gap-y-8 py-10">
-      <div className="flex flex-col items-center justify-center gap-y-6 *:text-center">
-        <h1 className="text-2xl font-semibold">
-          React Router Workshop: From Library to Framework, All in One
+    <div className="min-h-screen max-w-7xl mx-auto flex flex-col items-center justify-center gap-y-8 py-10">
+      <div className="w-full h-[70vh] flex flex-col items-center justify-center gap-y-6 *:text-center">
+        <h1 className="text-5xl font-semibold leading-snug">
+          React Router Workshop:<br /> From Library to Framework, All in One
           Comprehensive Training
         </h1>
-        <p className="">
+        <p className="font-semibold text-gray-600">
           Master every feature and capability of React Router—dive deep into its
           evolution from a powerful library to a full-fledged framework, all in
           one workshop.

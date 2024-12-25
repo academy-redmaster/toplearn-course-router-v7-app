@@ -88,22 +88,22 @@ export default function NavigationBar() {
           <p className="font-bold text-inherit">Redmaster</p>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" to="/">
+          <Link color="foreground" to="/" preventScrollReset={true}>
             Home
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link to="/todo" aria-current="page">
+          <Link to="/todo" aria-current="page" preventScrollReset={true}>
             Todo
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" to="/contactus">
+          <Link color="foreground" to="/contactus" preventScrollReset={true}>
             ContactUs
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" to="/admin">
+          <Link color="foreground" to="/admin" preventScrollReset={true}>
             Admin
           </Link>
         </NavbarItem>

@@ -30,7 +30,7 @@ todoRoutes.get('/', fetchTodosController);
 // !----------------------------------------------------------------
 /**
  * @swagger
- * /delay-todos:
+ * /todos/delay-todos:
  *   get:
  *     summary: Fetch todos with a 10-second delay
  *     tags: [Todos]

@@ -23,7 +23,15 @@ export const fetchTodosDelayController = async (req, res) => {
    try {
       await Bun.sleep(10000);
 
-      const todos = await Todo.find({}).populate('owner');
+      const { priority, status } = req.query;
+      const query = {};
+      if (priority) {
+         query.priority = priority;
+      }
+      if (status) {
+         query.status = status;
+      }
+      const todos = await Todo.find(query).populate('owner');
       res.json(todos);
    } catch (error) {
       res.status(500).json({ message: error.message });

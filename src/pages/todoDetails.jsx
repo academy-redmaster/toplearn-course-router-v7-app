@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router";
 import {
   Avatar,
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -12,8 +11,8 @@ import moment from "moment";
 export default function TodoDetailsPage() {
   const todo = useLoaderData();
   return (
-    <div className="w-full min-h-[70vh] flex items-center justify-center">
-      <Card className="w-full lg:w-1/2 mx-auto h-[400px]">
+    <div className="w-full min-h-[60vh] flex items-center justify-center ">
+      <Card className="w-full lg:w-1/2 mx-auto h-[500px] mb-10">
         <CardHeader className="justify-between">
           <div className="flex gap-5">
             <Avatar
@@ -26,64 +25,83 @@ export default function TodoDetailsPage() {
               <h4 className="text-small font-semibold leading-none text-default-600">
                 {todo.title}
               </h4>
-              <h5 className="text-small tracking-tight text-default-400">
+              <Chip variant="light" size="md" color="primary">
                 {todo?.owner?.email}
-              </h5>
+              </Chip>
             </div>
           </div>
           <div className="space-x-2">
-            <Button
+            <Chip
               color="secondary"
-              radius="full"
-              size="sm"
-              variant={"shadow"}
+              size="md"
+              variant={"dot"}
+              className="border-secondary"
             >
               {todo?.isArchived ? "Arichived" : "UnArchived"}
-            </Button>
-            <Button color="warning" radius="full" size="sm" variant={"shadow"}>
+            </Chip>
+            <Chip
+              color="warning"
+              size="md"
+              variant={"dot"}
+              className="border-warning"
+            >
               {todo.status}
-            </Button>
+            </Chip>
           </div>
         </CardHeader>
         <CardBody className="px-3  text-small text-default-400 flex flex-col justify-between py-4">
           <p>{todo.description}</p>
-          <div className="space-y-4">
+          <div className="space-y-4 my-5">
             <div className="flex items-center gap-x-3">
-              <Chip color="danger" variant="shadow">
-                Due Date:
+              <Chip
+                color="primary"
+                variant="flat"
+                endContent={<i className="ri-arrow-right-s-line"></i>}
+              >
+                Due Date
               </Chip>
-              <span>{moment(todo.duedate).format("YYYY-MM-DD HH:mm")}</span>
+              <span className="font-semibold">
+                {moment(todo.duedate).format("MMMM Do YYYY : HH:mm")}
+              </span>
             </div>
             <div className="flex items-center gap-x-3">
-              <Chip color="danger" variant="shadow">
-                daysLeft:
+              <Chip
+                color="primary"
+                variant="flat"
+                endContent={<i className="ri-arrow-right-s-line"></i>}
+              >
+                daysLeft
               </Chip>
-              <span>{todo.daysLeft}</span>
+              <span className="font-semibold">{todo.daysLeft}</span>
             </div>
             {todo.completedAt ? (
               <div className="flex items-center gap-x-3">
-                <Chip color="danger" variant="shadow">
+                <Chip
+                  color="primary"
+                  variant="flat"
+                  endContent={<i className="ri-arrow-right-s-line"></i>}
+                >
                   CompletedAt
                 </Chip>
-                <span>
+                <span className="font-semibold">
                   {moment(todo.compeletedAt).format("YYYY-MM-DD HH:mm")}
                 </span>
               </div>
             ) : null}
           </div>
         </CardBody>
-        <CardFooter className="gap-3">
-          <div className="flex gap-1">
-            <p className="font-semibold text-default-400 text-small">
-              username
-            </p>
-            <p className=" text-default-400 text-small">
+        <CardFooter className="gap-3 flex-col items-start border-b">
+          <div className="flex items-center gap-1">
+            <p className="text-default-400 text-small">username</p>
+            <Chip variant="light" color="primary">
               {todo?.owner?.userName}
-            </p>
+            </Chip>
           </div>
-          <div className="flex gap-1">
-            <p className="font-semibold text-default-400 text-small">email</p>
-            <p className="text-default-400 text-small">{todo?.owner?.email}</p>
+          <div className="flex items-center gap-1">
+            <p className="text-default-400 text-small">email</p>
+            <Chip variant="light" color="primary">
+              {todo?.owner?.email}
+            </Chip>
           </div>
         </CardFooter>
       </Card>

@@ -35,20 +35,33 @@ export default function TableTodo({ columns, todos }) {
               color: "default",
               variant: "bordered",
             }}
-            description={todo.title}
+            description={
+              <Chip
+                variant="light"
+                size="md"
+                color="primary"
+              >{`${todo.owner.email}`}</Chip>
+            }
             name={cellValue}
-          >
-            {todo.description}
-          </User>
+            wrapper="ali"
+          ></User>
         );
       case "dueDate":
         return (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <p className="text-bold text-sm capitalize">
               due:{moment(todo.dueDate).format("MMM Do YYYY")}
             </p>
-            <p className="text-bold text-sm capitalize text-default-400">
-              {todo.daysLeft}
+            <p className="text-bold text-sm capitalize text-default-400 ">
+              <span className="text-[11px]">daysLeft</span>
+              <Chip
+                size="sm"
+                variant="dot"
+                color="primary"
+                className="border-0"
+              >
+                {todo.daysLeft}
+              </Chip>
             </p>
           </div>
         );
