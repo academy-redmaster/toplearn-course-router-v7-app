@@ -56,6 +56,10 @@ export default function TodoIndexPage() {
 export async function loader({ request }) {
   const url = new URL(request.url);
   const queryString = url.search;
-  const response = await fetch(`http://localhost:8008/api/todos${queryString}`);
-  return response.json();
+  const response = await fetch(
+    `http://localhost:8008/api/todos${queryString}`
+  );
+  
+  const data = await response.json();
+  return data;
 }

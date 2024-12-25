@@ -47,7 +47,7 @@ export const createTodoController = async (req, res) => {
 
       res.status(201).json(todo);
    } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(500).json({ message: error.message });
    }
 };
 // !----------------------------------------------------------------

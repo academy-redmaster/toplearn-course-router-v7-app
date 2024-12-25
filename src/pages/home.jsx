@@ -43,13 +43,7 @@ export default function HomePage() {
       </div>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3  my-10 ">
-        <Card
-          as={Link}
-          to="https://github.com/academy-redmaster"
-          isFooterBlurred
-          className="border-none h-[400px]"
-          radius="lg"
-        >
+        <Card isFooterBlurred className="border-none h-[400px]" radius="lg">
           <Image
             alt="Woman listing to music"
             className="object-cover w-full h-full"
@@ -73,8 +67,6 @@ export default function HomePage() {
           </CardFooter>
         </Card>
         <Card
-          as={Link}
-          to="https://reactrouter.com/"
           isFooterBlurred
           className="border-none h-[400px] bg-black"
           radius="lg"
@@ -103,8 +95,6 @@ export default function HomePage() {
         </Card>
 
         <Card
-          as={Link}
-          to="http://localhost:8008/api-docs/"
           isFooterBlurred
           className="border-none  h-[400px] bg-white "
           radius="lg"

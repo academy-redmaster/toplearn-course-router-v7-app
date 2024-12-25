@@ -27,7 +27,7 @@ import AdminPage from "./pages/admin.jsx";
 import AdminTodoPage from "./pages/adminTodo.jsx";
 import AdminTodoDetails, {
   loader as adminTodoDetailsLoader,
-  AdminTodoDetailsErrorBoundary
+  AdminTodoDetailsErrorBoundary,
 } from "./pages/adminTodoDetails.jsx";
 import NotFoundPage from "./pages/404.jsx";
 
@@ -40,8 +40,12 @@ const router = createBrowserRouter(
       errorElement={<ErrorBoundary />}
     >
       <Route path="/:lang?/" Component={HomePage} />
-      <Route path="todo" element={<TodoLayoutPage />} >
-        <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
+      <Route path="todo" element={<TodoLayoutPage />}>
+        <Route
+          index
+          element={<TodoIndexPage />}
+          loader={todoIndexLoader}
+        />
         <Route path="create" element={"create page"} />
         <Route
           path=":id"
@@ -59,7 +63,11 @@ const router = createBrowserRouter(
       />
       <Route path="auth/login" element={"login page"} />
       <Route path="auth/register" element={"regsiter  page"} />
-      <Route path="admin" element={<AdminLayoutPage />} errorElement={<h1>error admin layout</h1>}>
+      <Route
+        path="admin"
+        element={<AdminLayoutPage />}
+        errorElement={<h1>error admin layout</h1>}
+      >
         <Route path="/admin" element={<AdminPage />}>
           <Route path="/admin/" element={<AdminTodoPage />}>
             <Route
@@ -80,7 +88,8 @@ createRoot(document.getElementById("root")).render(
 );
 
 function ErrorBoundary() {
-  const error = useRouteError()
+  const error = useRouteError();
+  console.log("🚀 ~ ErrorBoundary ~ error:", error)
   return (
     <>
       <NotFoundPage error={error} />

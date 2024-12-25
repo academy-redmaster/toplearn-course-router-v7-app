@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { redirect, useLoaderData } from "react-router";
 import {
   Avatar,
   Card,
@@ -110,5 +110,10 @@ export default function TodoDetailsPage() {
 }
 export async function loader({ params }) {
   const response = await fetch(`http://localhost:8008/api/todos/${params.id}`);
-  return response.json();
+  if (!response.ok) {
+    return redirect("/todo")
+  }
+  const data = await response.json();
+  
+  return data;
 }
