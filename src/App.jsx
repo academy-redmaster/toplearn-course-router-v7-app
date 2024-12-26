@@ -1,12 +1,14 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeSwitcher } from "./components/themeSwitcher";
-import { Outlet, ScrollRestoration, useLocation } from "react-router";
+import { Outlet, ScrollRestoration, useLocation, useMatches } from "react-router";
 import NavigationBar from "./components/navigationBar";
 import CopyRight from "./components/copyRight";
 
 export default function App() {
   const location = useLocation();
+  const matches = useMatches()
+  console.log("🚀 ~ App ~ matches:", matches)
   const isAdminSubdomain = location.pathname.startsWith("/admin");
   const isAuthSubdomain = location.pathname.startsWith("/auth");
   return (

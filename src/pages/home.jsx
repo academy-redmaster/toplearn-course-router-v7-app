@@ -1,14 +1,26 @@
 import { useTheme } from "next-themes";
 import routerLightImage from "../assets/image/react-routr-light.svg";
 import routerDarkImage from "../assets/image/react-router-dark.svg";
-import { Link, useParams } from "react-router";
+import { Link, useMatches, useParams } from "react-router";
 import { Card, CardFooter, Image, Button, Chip } from "@nextui-org/react";
 import restApiImage from "../assets/image/restapi.png";
 import githubImage from "../assets/image/github.png";
 import reactrouterImage from "../assets/image/reactrouter.png";
+import { useEffect } from "react";
 export default function HomePage() {
   const { lang } = useParams();
   const { theme } = useTheme();
+  const matches = useMatches()
+  const currentMatche = matches[matches.length - 1]
+  
+  useEffect(() => { 
+    if (currentMatche.handle && currentMatche.handle.title) {
+      document.title = currentMatche.handle.title
+    } else {
+      document.title = "Toplearn"
+    }
+  },[currentMatche.handle])
+
   return (
     <div className="min-h-screen max-w-7xl mx-auto w-full">
       <div className="w-full h-[70vh] flex flex-col items-center justify-center gap-y-20">

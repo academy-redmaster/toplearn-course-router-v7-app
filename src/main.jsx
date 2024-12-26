@@ -6,6 +6,7 @@ import App, { loader as appLoader } from "./App.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Link,
   Route,
   RouterProvider,
   useRouteError,
@@ -30,6 +31,8 @@ import AdminTodoDetails, {
   AdminTodoDetailsErrorBoundary,
 } from "./pages/adminTodoDetails.jsx";
 import NotFoundPage from "./pages/404.jsx";
+import LoginPage from "./pages/login.jsx";
+import SignUpPage from "./pages/signUp.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,20 +42,36 @@ const router = createBrowserRouter(
       id="root"
       errorElement={<ErrorBoundary />}
     >
-      <Route path="/:lang?/" Component={HomePage} />
-      <Route path="todo" element={<TodoLayoutPage />}>
+      <Route
+        path="/:lang?/"
+        Component={HomePage}
+        handle={{ title: "Home Page" }}
+      />
+      <Route
+        path="todo"
+        element={<TodoLayoutPage />}
+        handle={{ crumb: () => <Link to="/todo">Todo</Link> }}
+      >
+        <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
         <Route
-          index
-          element={<TodoIndexPage />}
-          loader={todoIndexLoader}
+          path="create"
+          element={"create page"}
+          handle={{ crumb: () => <Link to="/todo/create">Todo Create</Link> }}
         />
-        <Route path="create" element={"create page"} />
         <Route
           path=":id"
           element={<TodoDetailsPage />}
           loader={todoDetailsLoader}
+          handle={{
+            title: (data) => data.title,
+            crumb: (data) => data.title,
+          }}
         />
-        <Route path=":id/edit" element={"create page"} />
+        <Route
+          path=":id/edit"
+          element={"create page"}
+          handle={{ crumb: () => "Todo Create" }}
+        />
         <Route path=":id/complete" Component={TodoCompletePage} />
         <Route path=":id/archive" element={"archive page"} />
       </Route>
@@ -61,8 +80,8 @@ const router = createBrowserRouter(
         Component={ContactUsPage}
         loader={contactusLoader}
       />
-      <Route path="auth/login" element={"login page"} />
-      <Route path="auth/register" element={"regsiter  page"} />
+      <Route path="auth/login" element={<LoginPage />} />
+      <Route path="auth/signup" element={<SignUpPage />} />
       <Route
         path="admin"
         element={<AdminLayoutPage />}
@@ -89,7 +108,7 @@ createRoot(document.getElementById("root")).render(
 
 function ErrorBoundary() {
   const error = useRouteError();
-  console.log("🚀 ~ ErrorBoundary ~ error:", error)
+  console.log("🚀 ~ ErrorBoundary ~ error:", error);
   return (
     <>
       <NotFoundPage error={error} />

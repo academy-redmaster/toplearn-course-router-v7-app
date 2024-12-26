@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nextui-org/breadcrumbs": "^2.2.5",
     "@nextui-org/button": "^2.2.7",
     "@nextui-org/card": "^2.2.7",
     "@nextui-org/chip": "^2.2.4",

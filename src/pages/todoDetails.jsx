@@ -1,4 +1,4 @@
-import { redirect, useLoaderData } from "react-router";
+import { redirect, useLoaderData, useMatches } from "react-router";
 import {
   Avatar,
   Card,
@@ -8,8 +8,21 @@ import {
   Chip,
 } from "@nextui-org/react";
 import moment from "moment";
+import { useEffect } from "react";
 export default function TodoDetailsPage() {
   const todo = useLoaderData();
+  const matches = useMatches();
+  const currentMatche = matches[matches.length - 1];
+  
+  useEffect(() => { 
+    if (currentMatche.handle && currentMatche.handle.title) {
+      document.title = currentMatche.handle.title(todo)
+    }
+    else {
+      document.title = "undefined "
+    }
+  },[currentMatche.handle])
+
   return (
     <div className="w-full min-h-[60vh] flex items-center justify-center ">
       <Card className="w-full lg:w-1/2 mx-auto h-[500px] mb-10">
@@ -111,9 +124,9 @@ export default function TodoDetailsPage() {
 export async function loader({ params }) {
   const response = await fetch(`http://localhost:8008/api/todos/${params.id}`);
   if (!response.ok) {
-    return redirect("/todo")
+    return redirect("/todo");
   }
   const data = await response.json();
-  
+
   return data;
 }
