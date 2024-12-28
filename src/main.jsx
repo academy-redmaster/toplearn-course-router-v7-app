@@ -18,11 +18,11 @@ import ContactUsPage, {
 import TodoLayoutPage from "./pages/todoLayout.jsx";
 import TodoIndexPage, {
   loader as todoIndexLoader,
+  action as todoIndexAction
 } from "./pages/todoIndex.jsx";
 import TodoDetailsPage, {
   loader as todoDetailsLoader,
 } from "./pages/todoDetails.jsx";
-import TodoCompletePage from "./pages/todoComplete.jsx";
 import AdminLayoutPage from "./pages/adminLayout.jsx";
 import AdminPage from "./pages/admin.jsx";
 import AdminTodoPage from "./pages/adminTodo.jsx";
@@ -54,7 +54,7 @@ const protectedRoutes = (
       element={<TodoLayoutPage />}
       handle={{ crumb: () => <Link to="/todo">Todo</Link> }}
     >
-      <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
+      <Route index element={<TodoIndexPage />} loader={todoIndexLoader} action={todoIndexAction} />
       <Route
         path="create"
         element={"create page"}
@@ -74,8 +74,6 @@ const protectedRoutes = (
         element={"create page"}
         handle={{ crumb: () => "Todo Create" }}
       />
-      <Route path=":id/complete" Component={TodoCompletePage} />
-      <Route path=":id/archive" element={"archive page"} />
     </Route>
     <Route
       path="contactus"

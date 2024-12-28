@@ -1,9 +1,17 @@
 import { Chip } from "@nextui-org/chip";
-import { useLoaderData, useNavigation, useRevalidator } from "react-router";
+import {
+  redirect,
+  redirectDocument,
+  useLoaderData,
+  useNavigation,
+  useRevalidator,
+} from "react-router";
 import TableTodo from "../components/tableTodo";
 import { Button } from "@nextui-org/button";
 import CustomLoader from "../components/customLoader";
 import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const columns = [
   { name: "TITLE", uid: "title" },
@@ -15,7 +23,7 @@ export default function TodoIndexPage() {
   const navigation = useNavigation();
   const revalidator = useRevalidator();
   const todos = useLoaderData();
-  const { userId } = useAuth()
+  const { userId } = useAuth();
   const handleRevalidate = () => {
     revalidator.revalidate();
   };
@@ -58,10 +66,85 @@ export default function TodoIndexPage() {
 export async function loader({ request }) {
   const url = new URL(request.url);
   const queryString = url.search;
-  const response = await fetch(
-    `http://localhost:8008/api/todos${queryString}`
-  );
-  
+  const response = await fetch(`http://localhost:8008/api/todos${queryString}`);
+
   const data = await response.json();
   return data;
+}
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const { _action, todoId, ...value } = Object.fromEntries(formData);
+
+  switch (_action) {
+    case "delete":
+      try {
+        const response = await axios.delete(
+          `http://localhost:8008/api/todos/${todoId}`
+        );
+        if (response.status === 200 || response.status === 204) {
+          toast.success(`the todo : ${todoId} delete`);
+        }
+      } catch (error) {
+        toast.error(`~ error : ${error.message}`);
+        throw new Response(`todoIndex action: ${error}`, {status:404})
+      }
+      break;
+    case "archive":
+      try {
+        const check = await axios.get(
+          `http://localhost:8008/api/todos/${todoId}`
+        );
+        console.log("🚀 ~ check:", check);
+        if (check.data && check.data.isArchived !== undefined) {
+          if (check.data.isArchived) {
+            const response = await axios.patch(
+              `http://localhost:8008/api/todos/${todoId}/unarchive`
+            );
+            if (response.status === 200 || response.status === 204) {
+              toast.warning("task updated successfully UnArchived ");
+            }
+          } else {
+            const response = await axios.patch(
+              `http://localhost:8008/api/todos/${todoId}/archive`
+            );
+            if (response.status === 200 || response.status === 204) {
+              toast.success("task updated successfully Archived ");
+            }
+          }
+        } else {
+          throw new Error("Invalid response from the server");
+        }
+      } catch (error) {
+        console.log("🚀 ~ error:", error);
+        toast.error(`~ error archive task : ${error.message}`);
+      }
+      break;
+    case "complete":
+      try {
+        const check = await axios.get(
+          `http://localhost:8008/api/todos/${todoId}`
+        );
+        if (check.data && check.data.isCompleted !== undefined) {
+          if (check.data.isCompleted) {
+            toast.info("the task is already completed, no change made.");
+          } else {
+            const response = await axios.patch(
+              `http://localhost:8008/api/todos/${todoId}/complete`
+            );
+            if (response.status === 200 || response.status === 204) {
+              toast.success("task updated successfully");
+            }
+          }
+        } else {
+          throw new Error("Invalid response from the server");
+        }
+        console.log("🚀 ~ check:", check);
+      } catch (error) {
+        toast.error(`~ error complete task: ${error.message}`);
+      }
+      break;
+    default:
+      return redirectDocument("/todo");
+  }
 }

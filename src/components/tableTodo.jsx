@@ -9,9 +9,10 @@ import {
   User,
   Chip,
   Tooltip,
+  Button,
 } from "@nextui-org/react";
 import moment from "moment/moment";
-import { Link } from "react-router";
+import { Form, Link } from "react-router";
 
 const statusColorMap = {
   pending: "secondary",
@@ -96,39 +97,57 @@ export default function TableTodo({ columns, todos }) {
               </Link>
             </Tooltip>
             <Tooltip color="success" content="completed todo">
-              <Link
-                to={`${todo.id}/complete`}
-                className="text-lg text-success cursor-pointer active:opacity-50"
-              >
-                {todo.isCompleted ? (
-                  <i className="ri-check-double-line"></i>
-                ) : (
-                  <i className="ri-check-line"></i>
-                )}
-              </Link>
+              <Form method="PATCH" action="/todo?index">
+                <input type="hidden" name="todoId" value={todo.id} />
+                <Button
+                  color="success"
+                  variant="light"
+                  isIconOnly
+                  type="submit"
+                  name="_action"
+                  value="complete"
+                  className={
+                    todo.isCompleted
+                      ? "ri-check-double-line text-lg"
+                      : "ri-check-line text-lg"
+                  }
+                ></Button>
+              </Form>
             </Tooltip>
             <Tooltip
               color="secondary"
               content={todo.isArchived ? "UnArchived" : "Archived"}
             >
-              <Link
-                to={`${todo.id}/archive`}
-                className="text-lg text-secondary cursor-pointer active:opacity-50"
-              >
-                {todo.isArchived ? (
-                  <i className="ri-bookmark-fill"></i>
-                ) : (
-                  <i className="ri-bookmark-line"></i>
-                )}
-              </Link>
+              <Form method="PATCH" action="/todo?index">
+                <input type="hidden" name="todoId" value={todo.id} />
+                <Button
+                  color="secondary"
+                  variant="light"
+                  isIconOnly
+                  type="submit"
+                  name="_action"
+                  value="archive"
+                  className={
+                    todo.isArchived
+                      ? "ri-bookmark-fill text-lg"
+                      : "ri-bookmark-line text-lg"
+                  }
+                ></Button>
+              </Form>
             </Tooltip>
             <Tooltip color="danger" content="Delete todo">
-              <Link
-                to={`${todo.id}/delete`}
-                className="text-lg text-danger cursor-pointer active:opacity-50"
-              >
-                <i className="ri-delete-bin-5-line"></i>
-              </Link>
+              <Form method="DELETE" action="/todo?index">
+                <input type="hidden" name="todoId" value={todo.id} />
+                <Button
+                  color="danger"
+                  variant="light"
+                  isIconOnly
+                  type="submit"
+                  name="_action"
+                  value="delete"
+                  className="ri-delete-bin-5-line"
+                ></Button>
+              </Form>
             </Tooltip>
           </div>
         );
