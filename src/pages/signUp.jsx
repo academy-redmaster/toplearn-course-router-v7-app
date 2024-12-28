@@ -1,7 +1,18 @@
-import { Input , Button } from "@nextui-org/react";
-import { Link } from "react-router";
+import { Input, Button } from "@nextui-org/react";
+import axios from "axios";
+import {
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "react-router";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
+  const data = useActionData();
+  console.log("🚀 ~ SignUpPage ~ data:", data);
+  const navigation = useNavigation();
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 px-4">
       <div className="w-full max-w-xl bg-white text-black rounded-lg shadow-2xl p-8">
@@ -11,7 +22,7 @@ export default function SignUpPage() {
         <p className="text-gray-600 text-center mb-6">
           Join us today! It`s quick and easy.
         </p>
-        <form className="space-y-6">
+        <Form method="POST" className="space-y-6">
           {/* Username Field */}
           <div>
             <Input
@@ -58,9 +69,9 @@ export default function SignUpPage() {
             size="lg"
             type="submit"
           >
-            Sign Up
+            {navigation.state !== "idle" ? "submitting..." : "Sign Up"}
           </Button>
-        </form>
+        </Form>
         <p className="text-sm text-center text-gray-600 mt-6">
           Already have an account?
           <Link
@@ -73,4 +84,20 @@ export default function SignUpPage() {
       </div>
     </div>
   );
+}
+
+export async function action({ request }) {
+  const data = Object.fromEntries(await request.formData());
+  try {
+    const response = await axios.post(
+      "http://localhost:8008/api/users/register",
+      data
+    );
+    console.log("🚀 ~ handleSubmit ~ response:", response.data);
+    toast.success("user Registered successfully");
+    return redirect("/auth/login");
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+    throw new Response(`signup action: ${error}` , {status:404})
+  }
 }

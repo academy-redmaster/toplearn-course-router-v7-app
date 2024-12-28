@@ -1,7 +1,10 @@
 import { Input, Button } from "@nextui-org/react";
-import { Link } from "react-router";
+import axios from "axios";
+import { Form, Link, redirect, useNavigation } from "react-router";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
+  const navigation = useNavigation();
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 px-4">
       <div className="w-full max-w-xl bg-white text-black rounded-lg shadow-2xl p-8">
@@ -11,7 +14,7 @@ export default function LoginPage() {
         <p className="text-center mb-6">
           Please login to your account to continue.
         </p>
-        <form className="space-y-6">
+        <Form method="POST" className="space-y-6">
           <div>
             <Input
               type="email"
@@ -43,9 +46,9 @@ export default function LoginPage() {
             size="lg"
             type="submit"
           >
-            Login
+            {navigation.state !== "idle" ? "submitting..." : "Login"}
           </Button>
-        </form>
+        </Form>
 
         <p className="flex items-center justify-center gap-x-4 text-sm text-center text-black mt-6">
           Don`t have an account?
@@ -59,4 +62,25 @@ export default function LoginPage() {
       </div>
     </div>
   );
+}
+
+export async function action({ request }) {
+  const data = Object.fromEntries(await request.formData());
+  try {
+    const response = await axios.post(
+      "http://localhost:8008/api/users/login",
+      data
+    );
+
+    const token = response.data.token;
+
+    if (token) {
+      sessionStorage.setItem("authToken", token);
+      toast.success("login successfull");
+      return redirect("/");
+    }
+  } catch (error) {
+    console.log("🚀 ~ handleSubmit ~ error:", error);
+    throw new Response(`action login: ${error.message}`, { status: 404 });
+  }
 }

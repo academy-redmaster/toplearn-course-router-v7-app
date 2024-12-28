@@ -4,11 +4,11 @@ import { ThemeSwitcher } from "./components/themeSwitcher";
 import { Outlet, ScrollRestoration, useLocation, useMatches } from "react-router";
 import NavigationBar from "./components/navigationBar";
 import CopyRight from "./components/copyRight";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   const location = useLocation();
   const matches = useMatches()
-  console.log("🚀 ~ App ~ matches:", matches)
   const isAdminSubdomain = location.pathname.startsWith("/admin");
   const isAuthSubdomain = location.pathname.startsWith("/auth");
   return (
@@ -17,6 +17,7 @@ export default function App() {
         {isAdminSubdomain || isAuthSubdomain ? null : <NavigationBar />}
         {/* {navigatioin.state === "loading" ? <CustomLoader /> : <Outlet />} */}
         <Outlet />
+        <ToastContainer />
         <ScrollRestoration
           getKey={(location, mathces) => {
             const paths = ["/", "/todo"];

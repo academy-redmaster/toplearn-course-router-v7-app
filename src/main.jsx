@@ -31,8 +31,76 @@ import AdminTodoDetails, {
   AdminTodoDetailsErrorBoundary,
 } from "./pages/adminTodoDetails.jsx";
 import NotFoundPage from "./pages/404.jsx";
-import LoginPage from "./pages/login.jsx";
-import SignUpPage from "./pages/signUp.jsx";
+import LoginPage, { action as loginAction } from "./pages/login.jsx";
+import SignUpPage, { action as signUpAction } from "./pages/signUp.jsx";
+import ProtectedRoute from "./utils/protectedRoute.jsx";
+
+const publicRoutes = (
+  <Route key="publicRoutes">
+    <Route
+      path="/:lang?/"
+      Component={HomePage}
+      handle={{ title: "Home Page" }}
+    />
+    <Route path="auth/login" element={<LoginPage />} action={loginAction} />
+    <Route path="auth/signup" element={<SignUpPage />} action={signUpAction} />
+  </Route>
+);
+
+const protectedRoutes = (
+  <Route element={<ProtectedRoute />} key="protectedRoutes">
+    <Route
+      path="todo"
+      element={<TodoLayoutPage />}
+      handle={{ crumb: () => <Link to="/todo">Todo</Link> }}
+    >
+      <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
+      <Route
+        path="create"
+        element={"create page"}
+        handle={{ crumb: () => <Link to="/todo/create">Todo Create</Link> }}
+      />
+      <Route
+        path=":id"
+        element={<TodoDetailsPage />}
+        loader={todoDetailsLoader}
+        handle={{
+          title: (data) => data.title,
+          crumb: (data) => data.title,
+        }}
+      />
+      <Route
+        path=":id/edit"
+        element={"create page"}
+        handle={{ crumb: () => "Todo Create" }}
+      />
+      <Route path=":id/complete" Component={TodoCompletePage} />
+      <Route path=":id/archive" element={"archive page"} />
+    </Route>
+    <Route
+      path="contactus"
+      Component={ContactUsPage}
+      loader={contactusLoader}
+    />
+    x
+    <Route
+      path="admin"
+      element={<AdminLayoutPage />}
+      errorElement={<h1>error admin layout</h1>}
+    >
+      <Route path="/admin" element={<AdminPage />}>
+        <Route path="/admin/" element={<AdminTodoPage />}>
+          <Route
+            index
+            element={<AdminTodoDetails />}
+            loader={adminTodoDetailsLoader}
+            errorElement={<AdminTodoDetailsErrorBoundary />}
+          />
+        </Route>
+      </Route>
+    </Route>
+  </Route>
+);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,62 +110,7 @@ const router = createBrowserRouter(
       id="root"
       errorElement={<ErrorBoundary />}
     >
-      <Route
-        path="/:lang?/"
-        Component={HomePage}
-        handle={{ title: "Home Page" }}
-      />
-      <Route
-        path="todo"
-        element={<TodoLayoutPage />}
-        handle={{ crumb: () => <Link to="/todo">Todo</Link> }}
-      >
-        <Route index element={<TodoIndexPage />} loader={todoIndexLoader} />
-        <Route
-          path="create"
-          element={"create page"}
-          handle={{ crumb: () => <Link to="/todo/create">Todo Create</Link> }}
-        />
-        <Route
-          path=":id"
-          element={<TodoDetailsPage />}
-          loader={todoDetailsLoader}
-          handle={{
-            title: (data) => data.title,
-            crumb: (data) => data.title,
-          }}
-        />
-        <Route
-          path=":id/edit"
-          element={"create page"}
-          handle={{ crumb: () => "Todo Create" }}
-        />
-        <Route path=":id/complete" Component={TodoCompletePage} />
-        <Route path=":id/archive" element={"archive page"} />
-      </Route>
-      <Route
-        path="contactus"
-        Component={ContactUsPage}
-        loader={contactusLoader}
-      />
-      <Route path="auth/login" element={<LoginPage />} />
-      <Route path="auth/signup" element={<SignUpPage />} />
-      <Route
-        path="admin"
-        element={<AdminLayoutPage />}
-        errorElement={<h1>error admin layout</h1>}
-      >
-        <Route path="/admin" element={<AdminPage />}>
-          <Route path="/admin/" element={<AdminTodoPage />}>
-            <Route
-              index
-              element={<AdminTodoDetails />}
-              loader={adminTodoDetailsLoader}
-              errorElement={<AdminTodoDetailsErrorBoundary />}
-            />
-          </Route>
-        </Route>
-      </Route>
+      {[publicRoutes, protectedRoutes]}
     </Route>
   )
 );
@@ -106,12 +119,8 @@ createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );
 
-function ErrorBoundary() {
+export function ErrorBoundary() {
   const error = useRouteError();
   console.log("🚀 ~ ErrorBoundary ~ error:", error);
-  return (
-    <>
-      <NotFoundPage error={error} />
-    </>
-  );
+  return <NotFoundPage error={error} />;
 }

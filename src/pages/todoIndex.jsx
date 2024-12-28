@@ -3,6 +3,7 @@ import { useLoaderData, useNavigation, useRevalidator } from "react-router";
 import TableTodo from "../components/tableTodo";
 import { Button } from "@nextui-org/button";
 import CustomLoader from "../components/customLoader";
+import { useAuth } from "../hooks/useAuth";
 
 const columns = [
   { name: "TITLE", uid: "title" },
@@ -14,6 +15,7 @@ export default function TodoIndexPage() {
   const navigation = useNavigation();
   const revalidator = useRevalidator();
   const todos = useLoaderData();
+  const { userId } = useAuth()
   const handleRevalidate = () => {
     revalidator.revalidate();
   };
@@ -21,7 +23,7 @@ export default function TodoIndexPage() {
     <div className="space-y-6 py-10">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-secondary">
-          Todo List: <span className="text-sm">todoid</span>
+          Todo List: <span className="text-sm">{userId}</span>
         </h1>
         <div className="flex items-center justify-center gap-2">
           <Chip

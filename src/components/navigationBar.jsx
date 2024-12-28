@@ -46,7 +46,6 @@ export default function NavigationBar() {
   useEffect(() => {
     (async () => {
       if (!userId) {
-        console.log("Invalid User Id");
         return;
       }
       try {

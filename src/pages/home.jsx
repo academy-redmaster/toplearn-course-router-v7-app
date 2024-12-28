@@ -10,16 +10,16 @@ import { useEffect } from "react";
 export default function HomePage() {
   const { lang } = useParams();
   const { theme } = useTheme();
-  const matches = useMatches()
-  const currentMatche = matches[matches.length - 1]
-  
-  useEffect(() => { 
+  const matches = useMatches();
+  const currentMatche = matches[matches.length - 1];
+
+  useEffect(() => {
     if (currentMatche.handle && currentMatche.handle.title) {
-      document.title = currentMatche.handle.title
+      document.title = currentMatche.handle.title;
     } else {
-      document.title = "Toplearn"
+      document.title = "Toplearn";
     }
-  },[currentMatche.handle])
+  }, [currentMatche.handle]);
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto w-full">

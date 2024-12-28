@@ -5,7 +5,6 @@ export default function BreadCrumbCustom() {
   const crumbs = matches
     .filter((match) => Boolean(match?.handle?.crumb))
     .map((match) => match.handle.crumb(match.data));
-  console.log("🚀 ~ BreadCrumbCustom ~ crumbs:", crumbs);
   return (
     <Breadcrumbs>
       <BreadcrumbItem key="Home">
