@@ -1,10 +1,28 @@
 import { Input, Button } from "@nextui-org/react";
 import axios from "axios";
-import { Form, Link, redirect, useNavigation } from "react-router";
+import { useEffect } from "react";
+import {
+  Form,
+  Link,
+  redirect,
+  useLocation,
+  useNavigation,
+  useSubmit,
+} from "react-router";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const navigation = useNavigation();
+  const submit = useSubmit();
+  const location = useLocation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      submit(null, { method: "POST" });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [submit, location]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 px-4">
       <div className="w-full max-w-xl bg-white text-black rounded-lg shadow-2xl p-8">
@@ -80,6 +98,10 @@ export async function action({ request }) {
       return redirect("/");
     }
   } catch (error) {
+    if (!data.email || !data.password) {
+      toast.error("complete login form")
+      return redirect("/auth/signup")
+    }
     console.log("🚀 ~ handleSubmit ~ error:", error);
     throw new Response(`action login: ${error.message}`, { status: 404 });
   }

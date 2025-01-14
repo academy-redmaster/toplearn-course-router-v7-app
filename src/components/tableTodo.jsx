@@ -12,7 +12,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import moment from "moment/moment";
-import { Form, Link } from "react-router";
+import { Form, Link, useAsyncValue } from "react-router";
 
 const statusColorMap = {
   pending: "secondary",
@@ -21,7 +21,9 @@ const statusColorMap = {
   archived: "primary",
 };
 
-export default function TableTodo({ columns, todos }) {
+export default function TableTodo({ columns , todos }) {
+  // const todos = useAsyncValue()
+  // const error = useAsyncError()
   const renderCell = React.useCallback((todo, columnKey) => {
     const cellValue = todo[columnKey];
 

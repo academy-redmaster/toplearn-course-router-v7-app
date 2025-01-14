@@ -1,6 +1,6 @@
 import { Chip } from "@nextui-org/chip";
 import {
-  redirect,
+  Await,
   redirectDocument,
   useLoaderData,
   useNavigation,
@@ -12,6 +12,7 @@ import CustomLoader from "../components/customLoader";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import React from "react";
 
 const columns = [
   { name: "TITLE", uid: "title" },
@@ -59,6 +60,11 @@ export default function TodoIndexPage() {
       ) : (
         <TableTodo columns={columns} todos={todos} />
       )}
+      {/* <React.Suspense fallback={<h1 className="text-7xl font-bold bg-black text-white p-20">loading...</h1>}>
+        <Await resolve={todos} errorElement={<h1>error await ...</h1>}>
+          <TableTodo columns={columns} />
+        </Await>
+      </React.Suspense> */}
     </div>
   );
 }
@@ -69,6 +75,7 @@ export async function loader({ request }) {
   const response = await fetch(`http://localhost:8008/api/todos${queryString}`);
 
   const data = await response.json();
+  // return { todos: Promise.resolve(data) };
   return data;
 }
 
@@ -87,7 +94,7 @@ export async function action({ request }) {
         }
       } catch (error) {
         toast.error(`~ error : ${error.message}`);
-        throw new Response(`todoIndex action: ${error}`, {status:404})
+        throw new Response(`todoIndex action: ${error}`, { status: 404 });
       }
       break;
     case "archive":

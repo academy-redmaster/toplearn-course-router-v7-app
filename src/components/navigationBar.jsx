@@ -9,11 +9,12 @@ import {
   NavbarItem,
   Button,
 } from "@nextui-org/react";
-import { Link, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import logo from "../assets/image/logo.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
+import CustomNavLink from "./customNavLink";
 
 export default function NavigationBar() {
   const { userId } = useAuth();
@@ -87,24 +88,20 @@ export default function NavigationBar() {
           <p className="font-bold text-inherit">Redmaster</p>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" to="/" preventScrollReset={true}>
-            Home
-          </Link>
+          <CustomNavLink href="/" label="Home" isPreventScroll={true} />
         </NavbarItem>
         <NavbarItem>
-          <Link to="/todo" aria-current="page" preventScrollReset={true}>
-            Todo
-          </Link>
+          <CustomNavLink href="/todo" label="Todo" isPreventScroll={true} />
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" to="/contactus" preventScrollReset={true}>
-            ContactUs
-          </Link>
+          <CustomNavLink
+            href="/contactus"
+            label="ContactUs"
+            isPreventScroll={true}
+          />
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" to="/admin" preventScrollReset={true}>
-            Admin
-          </Link>
+          <CustomNavLink href="/admin" label="Admin" isPreventScroll={true} />
         </NavbarItem>
       </NavbarContent>
 

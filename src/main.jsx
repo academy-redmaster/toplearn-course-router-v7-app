@@ -18,7 +18,7 @@ import ContactUsPage, {
 import TodoLayoutPage from "./pages/todoLayout.jsx";
 import TodoIndexPage, {
   loader as todoIndexLoader,
-  action as todoIndexAction
+  action as todoIndexAction,
 } from "./pages/todoIndex.jsx";
 import TodoDetailsPage, {
   loader as todoDetailsLoader,
@@ -34,6 +34,7 @@ import NotFoundPage from "./pages/404.jsx";
 import LoginPage, { action as loginAction } from "./pages/login.jsx";
 import SignUpPage, { action as signUpAction } from "./pages/signUp.jsx";
 import ProtectedRoute from "./utils/protectedRoute.jsx";
+import TodoCreatePage,{action as todoCreateAction} from "./pages/todoCreate.jsx";
 
 const publicRoutes = (
   <Route key="publicRoutes">
@@ -54,10 +55,21 @@ const protectedRoutes = (
       element={<TodoLayoutPage />}
       handle={{ crumb: () => <Link to="/todo">Todo</Link> }}
     >
-      <Route index element={<TodoIndexPage />} loader={todoIndexLoader} action={todoIndexAction} />
+      <Route
+        index
+        element={<TodoIndexPage />}
+        loader={todoIndexLoader}
+        action={todoIndexAction}
+        shouldRevalidate={() => {
+          // console.log("🚀 ~ params:", params)
+          // console.log("shouldRevalidate running");
+          return true;
+        }}
+      />
       <Route
         path="create"
-        element={"create page"}
+        element={<TodoCreatePage />}
+        action={todoCreateAction}
         handle={{ crumb: () => <Link to="/todo/create">Todo Create</Link> }}
       />
       <Route
@@ -71,8 +83,9 @@ const protectedRoutes = (
       />
       <Route
         path=":id/edit"
-        element={"create page"}
-        handle={{ crumb: () => "Todo Create" }}
+        element={<TodoCreatePage />}
+        handle={{ crumb: () => "Todo Edit" }}
+        action={todoCreateAction}
       />
     </Route>
     <Route
