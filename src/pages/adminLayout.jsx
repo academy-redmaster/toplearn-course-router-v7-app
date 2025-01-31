@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { Link, Outlet } from "react-router";
 
 export default function AdminLayoutPage() {

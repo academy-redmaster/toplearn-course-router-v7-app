@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   Chip,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import moment from "moment";
 import { useEffect } from "react";
 export default function TodoDetailsPage() {

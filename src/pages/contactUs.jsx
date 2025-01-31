@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { useTheme } from "next-themes";
 import { useLoaderData } from "react-router";
 import routerLightImage from "../assets/image/react-routr-light.svg";

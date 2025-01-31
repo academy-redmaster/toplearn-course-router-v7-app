@@ -2,7 +2,7 @@ import { useTheme } from "next-themes";
 import routerLightImage from "../assets/image/react-routr-light.svg";
 import routerDarkImage from "../assets/image/react-router-dark.svg";
 import { Link, useMatches, useParams } from "react-router";
-import { Card, CardFooter, Image, Button, Chip } from "@nextui-org/react";
+import { Card, CardFooter, Image, Button, Chip } from "@heroui/react";
 import restApiImage from "../assets/image/restapi.png";
 import githubImage from "../assets/image/github.png";
 import reactrouterImage from "../assets/image/reactrouter.png";

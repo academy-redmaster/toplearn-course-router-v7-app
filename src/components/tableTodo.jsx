@@ -10,7 +10,7 @@ import {
   Chip,
   Tooltip,
   Button,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import moment from "moment/moment";
 import { Form, Link, useAsyncValue } from "react-router";
 

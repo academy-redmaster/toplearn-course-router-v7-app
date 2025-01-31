@@ -8,7 +8,7 @@ import {
   NavbarContent,
   NavbarItem,
   Button,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Link, NavLink, useNavigate } from "react-router";
 import logo from "../assets/image/logo.svg";
 import axios from "axios";

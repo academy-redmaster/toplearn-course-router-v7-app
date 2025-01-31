@@ -1,5 +1,5 @@
 import { Link, useMatches } from "react-router";
-import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 export default function BreadCrumbCustom() {
   const matches = useMatches();
   const crumbs = matches

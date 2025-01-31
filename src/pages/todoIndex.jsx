@@ -1,4 +1,4 @@
-import { Chip } from "@nextui-org/chip";
+import { Chip } from "@heroui/chip";
 import {
   Await,
   redirectDocument,
@@ -7,7 +7,7 @@ import {
   useRevalidator,
 } from "react-router";
 import TableTodo from "../components/tableTodo";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import CustomLoader from "../components/customLoader";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";

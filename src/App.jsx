@@ -1,4 +1,4 @@
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeSwitcher } from "./components/themeSwitcher";
 import { Outlet, ScrollRestoration, useLocation, useMatches } from "react-router";
@@ -12,7 +12,7 @@ export default function App() {
   const isAdminSubdomain = location.pathname.startsWith("/admin");
   const isAuthSubdomain = location.pathname.startsWith("/auth");
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
         {isAdminSubdomain || isAuthSubdomain ? null : <NavigationBar />}
         {/* {navigatioin.state === "loading" ? <CustomLoader /> : <Outlet />} */}
@@ -29,7 +29,7 @@ export default function App() {
         {isAdminSubdomain || isAuthSubdomain ? null : <CopyRight />}
         <ThemeSwitcher />
       </NextThemesProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   );
 }
 

@@ -4,7 +4,7 @@ import {
     DropdownMenu,
     DropdownItem,
     Button,
-  } from "@nextui-org/react";
+  } from "@heroui/react";
   import { useSearchParams } from "react-router";
   
   export default function FilterPriority() {

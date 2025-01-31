@@ -1,4 +1,4 @@
-import { Input, Button } from "@nextui-org/react";
+import { Input, Button } from "@heroui/react";
 import axios from "axios";
 import { useEffect } from "react";
 import {
